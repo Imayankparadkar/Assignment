@@ -1,4 +1,4 @@
-# Securify Authentication Module (DevLy Hiring Assignment)
+# Securify Authentication Module
 
 **Candidate**: Mayank  
 **Role**: Frontend Developer  
