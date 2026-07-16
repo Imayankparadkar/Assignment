@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevLy Auth Module
+
+A modern Authentication Module built for the DevLy Hiring Assignment.
+
+## Features
+
+- **Modern Tech Stack**: Built with Next.js (App Router), React, TypeScript, and Tailwind CSS (v4).
+- **Comprehensive Auth Flow**: Includes Login, Signup, Forgot Password, Reset Password, and a protected Profile page.
+- **Robust Validation**: Form validation handled using `react-hook-form` and `zod` schemas.
+- **Mock Authentication**: Simulates a backend with `AuthContext` and uses `localStorage` for maintaining session state across refreshes.
+- **Premium UI/UX**: Sleek dark mode design with glassmorphism effects, smooth animations, and responsive layouts.
+- **Bonus Features**:
+  - Google Sign-In UI mock
+  - "Remember Me" checkbox
+  - Password visibility toggle
+
+## Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Open the app**:
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing the Auth Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. You will be redirected to `/login` if not authenticated.
+2. Enter any valid email (e.g., `test@example.com`) and a password (min 6 characters) to sign in. 
+   *(Note: For demonstration purposes, entering `error@demo.com` simulates a failed login)*
+3. Alternatively, test the **Sign Up** page with form validation.
+4. Test the **Forgot Password** and **Reset Password** flows.
+5. Upon successful login, you will be redirected to the `/profile` page (Protected Route).
+6. Click **Sign out** to clear the mock session and return to the login screen.
 
-## Learn More
+## Architecture & Code Quality
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Component-Driven**: Reusable UI components (`Input`, `Button`, `Card`, `Label`) located in `src/components/ui/`.
+- **State Management**: Centralized in `src/context/AuthContext.tsx` using React Context.
+- **Styling**: Leverages Tailwind CSS v4's new `@theme` configuration in `globals.css` with custom utility classes like `.glass-card`.
+- **Type Safety**: Fully typed with TypeScript interfaces and strict Zod validation schemas.
