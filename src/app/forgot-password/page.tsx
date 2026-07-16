@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -20,6 +20,13 @@ type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const {
     register,
@@ -33,7 +40,7 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
     
     // Simulate API call to send reset email
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       setIsLoading(false);
       setIsSubmitted(true);
     }, 1500);
@@ -81,6 +88,7 @@ export default function ForgotPasswordPage() {
                     id="email"
                     type="email"
                     placeholder="name@example.com"
+                    disabled={isLoading}
                     {...register("email")}
                     className={errors.email ? "border-red-500" : ""}
                   />

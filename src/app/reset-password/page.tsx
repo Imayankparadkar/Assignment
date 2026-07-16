@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -28,6 +28,15 @@ export default function ResetPasswordPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const timeoutRef1 = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef2 = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef1.current) clearTimeout(timeoutRef1.current);
+      if (timeoutRef2.current) clearTimeout(timeoutRef2.current);
+    };
+  }, []);
 
   const {
     register,
@@ -41,12 +50,12 @@ export default function ResetPasswordPage() {
     setIsLoading(true);
     
     // Simulate API call to reset password
-    setTimeout(() => {
+    timeoutRef1.current = setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);
       
       // Redirect to login after 3 seconds
-      setTimeout(() => {
+      timeoutRef2.current = setTimeout(() => {
         router.push("/login");
       }, 3000);
     }, 1500);
@@ -86,11 +95,13 @@ export default function ResetPasswordPage() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      disabled={isLoading}
                       {...register("password")}
                       className={errors.password ? "border-red-500 pr-10" : "pr-10"}
                     />
                     <button
                       type="button"
+                      disabled={isLoading}
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
@@ -109,11 +120,13 @@ export default function ResetPasswordPage() {
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      disabled={isLoading}
                       {...register("confirmPassword")}
                       className={errors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
                     />
                     <button
                       type="button"
+                      disabled={isLoading}
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >

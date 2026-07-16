@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -29,6 +29,13 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const {
     register,
@@ -42,7 +49,7 @@ export default function SignupPage() {
     setIsLoading(true);
     
     // Simulate API call for registration
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       // Mock successful signup and auto-login
       login("mock-jwt-token-newuser", {
         id: Math.random().toString(36).substr(2, 9),
@@ -72,6 +79,7 @@ export default function SignupPage() {
                 <Input
                   id="name"
                   placeholder="John Doe"
+                  disabled={isLoading}
                   {...register("name")}
                   className={errors.name ? "border-red-500" : ""}
                 />
@@ -85,6 +93,7 @@ export default function SignupPage() {
                   id="email"
                   type="email"
                   placeholder="name@example.com"
+                  disabled={isLoading}
                   {...register("email")}
                   className={errors.email ? "border-red-500" : ""}
                 />
@@ -100,11 +109,13 @@ export default function SignupPage() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
+                    disabled={isLoading}
                     {...register("password")}
                     className={errors.password ? "border-red-500 pr-10" : "pr-10"}
                   />
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
@@ -123,11 +134,13 @@ export default function SignupPage() {
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="••••••••"
+                    disabled={isLoading}
                     {...register("confirmPassword")}
                     className={errors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
                   />
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >

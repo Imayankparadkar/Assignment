@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -25,6 +25,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const {
     register,
@@ -39,7 +46,7 @@ export default function LoginPage() {
     setError(null);
     
     // Simulate API call
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       if (data.email === "test@example.com" && data.password === "password123") {
         login("mock-jwt-token-12345", {
           id: "1",
@@ -65,7 +72,7 @@ export default function LoginPage() {
 
   const onGoogleSignIn = () => {
     setIsLoading(true);
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       login("mock-jwt-token-google", {
         id: "2",
         name: "Google User",
@@ -100,6 +107,7 @@ export default function LoginPage() {
                   id="email"
                   type="email"
                   placeholder="name@example.com"
+                  disabled={isLoading}
                   {...register("email")}
                   className={errors.email ? "border-red-500" : ""}
                 />
@@ -119,11 +127,13 @@ export default function LoginPage() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
+                    disabled={isLoading}
                     {...register("password")}
                     className={errors.password ? "border-red-500 pr-10" : "pr-10"}
                   />
                   <button
                     type="button"
+                    disabled={isLoading}
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
@@ -139,8 +149,9 @@ export default function LoginPage() {
                 <input
                   type="checkbox"
                   id="rememberMe"
+                  disabled={isLoading}
                   {...register("rememberMe")}
-                  className="h-4 w-4 rounded border-border bg-input text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-border bg-input text-primary focus:ring-primary disabled:opacity-50"
                 />
                 <Label htmlFor="rememberMe" className="text-sm font-normal cursor-pointer">
                   Remember me

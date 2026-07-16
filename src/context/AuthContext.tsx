@@ -34,7 +34,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error("Failed to parse user from local storage");
+        console.error("Failed to parse user from local storage. Clearing corrupted state.");
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_user");
       }
     }
     setIsLoading(false);
