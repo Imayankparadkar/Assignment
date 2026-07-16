@@ -1,8 +1,5 @@
 # Securify Authentication Module
 
-**Candidate**: Mayank  
-**Role**: Frontend Developer  
-
 ## Project Overview
 
 Welcome to the **Securify VPN Authentication Module**. This project was built to fulfill the DevLy Hiring Assignment requirements for a Frontend Developer role. It is a modern, highly optimized, and fully responsive authentication flow built using Next.js, TypeScript, and Tailwind CSS.
