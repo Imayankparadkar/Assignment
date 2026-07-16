@@ -88,10 +88,7 @@ export default function ForgotPasswordPage() {
                     Return to sign in
                   </Button>
                 </Link>
-                {/* For testing purposes, we add a mock link to reset-password */}
-                <div className="pt-8 text-xs text-center text-muted-foreground">
-                  <p>For testing: <Link href="/reset-password" className="text-primary underline">Go to Reset Password</Link></p>
-                </div>
+
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
