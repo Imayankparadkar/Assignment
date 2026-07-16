@@ -1,52 +1,83 @@
-# DevLy Auth Module
+# Securify Authentication Module (DevLy Hiring Assignment)
 
-A modern Authentication Module built for the DevLy Hiring Assignment.
+**Candidate**: Mayank  
+**Role**: Frontend Developer  
+
+## Project Overview
+
+Welcome to the **Securify VPN Authentication Module**. This project was built to fulfill the DevLy Hiring Assignment requirements for a Frontend Developer role. It is a modern, highly optimized, and fully responsive authentication flow built using Next.js, TypeScript, and Tailwind CSS.
+
+The application simulates a premium cybersecurity platform, featuring a dark, glassmorphic aesthetic with robust client-side validation and secure edge-case handling.
 
 ## Features
 
-- **Modern Tech Stack**: Built with Next.js (App Router), React, TypeScript, and Tailwind CSS (v4).
-- **Comprehensive Auth Flow**: Includes Login, Signup, Forgot Password, Reset Password, and a protected Profile page.
-- **Robust Validation**: Form validation handled using `react-hook-form` and `zod` schemas.
-- **Mock Authentication**: Simulates a backend with `AuthContext` and uses `localStorage` for maintaining session state across refreshes.
-- **Premium UI/UX**: Sleek dark mode design with glassmorphism effects, smooth animations, and responsive layouts.
-- **Bonus Features**:
-  - Google Sign-In UI mock
-  - "Remember Me" checkbox
-  - Password visibility toggle
+This project successfully implements 100% of the required and bonus features:
 
-## Prerequisites
+### Core Requirements
+- **Login & Signup Pages**: Beautiful, responsive interfaces with strict form validation.
+- **Forgot & Reset Password Pages**: Complete flows for account recovery simulation.
+- **Profile Dashboard**: A protected route only accessible to authenticated users.
+- **Form Validation**: Powered by `zod` and `react-hook-form` to ensure secure, correct data entry.
+- **Mock JWT Authentication**: A simulated authentication flow managed globally via React Context.
+- **Loading & Error States**: Comprehensive UI feedback during simulated API calls, including form-freezing to prevent race conditions.
+- **Fully Responsive**: Flawless design execution across desktop, tablet, and mobile breakpoints.
 
-- Node.js (v18 or higher recommended)
-- npm
+### Bonus Features Included
+- **Google Sign-In UI**: Mockup integration on the login page.
+- **Remember Me Option**: Checkbox integration on the login page.
+- **Password Visibility Toggle**: Interactive "eye" icons to hide/show passwords across all relevant forms.
 
-## Getting Started
+## Enterprise-Grade Optimizations
+- **Edge Case Protection**: Implemented `useEffect` cleanup functions on all mock API calls to prevent React memory leaks (state updates on unmounted components).
+- **Race Condition Prevention**: Input fields are strictly disabled (`disabled={isLoading}`) during form submission to prevent concurrent data mutations.
+- **System Design Ready**: Please refer to the `SYSTEM_DESIGN.md` file located in the root of this repository for documentation on how this application would scale to 1 million users and handle backend race conditions.
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+## Tech Stack
 
-2. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
+- **Framework**: [Next.js (App Router)](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Form Handling**: [React Hook Form](https://react-hook-form.com/)
+- **Validation**: [Zod](https://zod.dev/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-3. **Open the app**:
-   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+## Setup Instructions
+
+Follow these simple steps to run the project locally on your machine.
+
+### Prerequisites
+- Node.js 18.x or later installed on your system.
+- `npm` or `yarn` installed.
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Imayankparadkar/Assignment.git
+cd Assignment
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Run the Development Server
+```bash
+npm run dev
+```
+
+### 4. View the App
+Open your browser and navigate to:
+[http://localhost:3000](http://localhost:3000)
+
+---
 
 ## Testing the Auth Flow
+Since this utilizes a mock backend, you can test the authentication flow easily:
+1. Try signing up with a new account.
+2. The mock API will simulate a 1.5-second network request and automatically log you in, redirecting you to the protected `/profile` page.
+3. Try navigating back to the home page (`/`) while logged in; the main CTA button will dynamically change to "Dashboard".
+4. Log out and try testing the form validation by entering invalid emails or short passwords.
 
-1. You will be redirected to `/login` if not authenticated.
-2. Enter any valid email (e.g., `test@example.com`) and a password (min 6 characters) to sign in. 
-   *(Note: For demonstration purposes, entering `error@demo.com` simulates a failed login)*
-3. Alternatively, test the **Sign Up** page with form validation.
-4. Test the **Forgot Password** and **Reset Password** flows.
-5. Upon successful login, you will be redirected to the `/profile` page (Protected Route).
-6. Click **Sign out** to clear the mock session and return to the login screen.
-
-## Architecture & Code Quality
-
-- **Component-Driven**: Reusable UI components (`Input`, `Button`, `Card`, `Label`) located in `src/components/ui/`.
-- **State Management**: Centralized in `src/context/AuthContext.tsx` using React Context.
-- **Styling**: Leverages Tailwind CSS v4's new `@theme` configuration in `globals.css` with custom utility classes like `.glass-card`.
-- **Type Safety**: Fully typed with TypeScript interfaces and strict Zod validation schemas.
+Thank you for reviewing my submission!
