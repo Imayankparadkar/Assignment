@@ -39,11 +39,24 @@ export default function ForgotPasswordPage() {
   const onSubmit = async (data: ForgotPasswordValues) => {
     setIsLoading(true);
     
-    // Simulate API call to send reset email
-    timeoutRef.current = setTimeout(() => {
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
       setIsLoading(false);
       setIsSubmitted(true);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      // In a real app we might show a toast error here
+    }
   };
 
   return (
