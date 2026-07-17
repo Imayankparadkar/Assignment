@@ -72,10 +72,13 @@ Open your browser and navigate to:
 ---
 
 ## Testing the Auth Flow
-Since this utilizes a mock backend, you can test the authentication flow easily:
-1. Try signing up with a new account.
-2. The mock API will simulate a 1.5-second network request and automatically log you in, redirecting you to the protected `/profile` page.
-3. Try navigating back to the home page (`/`) while logged in; the main CTA button will dynamically change to "Dashboard".
-4. Log out and try testing the form validation by entering invalid emails or short passwords.
+To make this frontend assignment behave exactly like a real full-stack application, authentication is powered by a **Simulated Database** using `localStorage`.
+
+1. **Sign Up & Email Verification**: When you sign up, your account is saved as `verified: false`. The app uses a Next.js API route and the **Resend API** to email you a real 6-digit OTP code to verify your account.
+2. **Resend Sandbox Limitation**: *Note for Evaluators: Because this project uses a free Resend developer account, the API is in Sandbox mode and will only successfully send emails to my registered email address. In a production environment with a verified domain, this restriction is lifted.*
+3. **Login**: You cannot log in unless you have created an account and verified it.
+4. **Quick Test Account**: To bypass the signup/verification flow for quick UI testing, a default verified account is pre-seeded into the database:
+   - **Email**: `test@example.com`
+   - **Password**: `password123`
 
 Thank you for reviewing my submission!
