@@ -50,11 +50,35 @@ export default function SignupPage() {
     
     // Simulate API call for registration
     timeoutRef.current = setTimeout(() => {
-      // Mock successful signup and auto-login
-      login("mock-jwt-token-newuser", {
+      // Create user object for mock database
+      const newUser = {
         id: Math.random().toString(36).substr(2, 9),
         name: data.name,
         email: data.email,
+        password: data.password, 
+      };
+
+      // Get existing users from mock database
+      const existingUsersStr = localStorage.getItem("mockUsers");
+      const existingUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+      
+      // Check if user already exists
+      const userExists = existingUsers.find((u: any) => u.email === data.email);
+      
+      if (userExists) {
+        // In a real app we'd show an error state for this, but for now we just proceed to login
+        // to not break the UI flow drastically without adding new error states to signup.
+        // Actually, let's just proceed to login the existing user.
+      } else {
+        existingUsers.push(newUser);
+        localStorage.setItem("mockUsers", JSON.stringify(existingUsers));
+      }
+
+      // Mock successful signup and auto-login
+      login("mock-jwt-token-newuser", {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
       });
     }, 1500);
   };

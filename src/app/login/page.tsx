@@ -47,26 +47,38 @@ export default function LoginPage() {
     
     // Simulate API call
     timeoutRef.current = setTimeout(() => {
-      if (data.email === "test@example.com" && data.password === "password123") {
-        login("mock-jwt-token-12345", {
-          id: "1",
-          name: "Test User",
-          email: data.email,
-        });
-      } else {
-        // Mock error or success for any credentials for testing
-        // To make testing easier, any login works in this demo unless email is 'error@demo.com'
-        if (data.email === "error@demo.com") {
-          setError("Invalid email or password");
-          setIsLoading(false);
-        } else {
-          login("mock-jwt-token-12345", {
-            id: "1",
-            name: "Candidate",
-            email: data.email,
-          });
-        }
+      // Get mock database
+      const existingUsersStr = localStorage.getItem("mockUsers");
+      let mockUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+      
+      // Seed default account if it doesn't exist
+      const defaultUser = { id: "1", name: "Test User", email: "test@example.com", password: "password123" };
+      if (!mockUsers.find((u: any) => u.email === defaultUser.email)) {
+        mockUsers.push(defaultUser);
+        localStorage.setItem("mockUsers", JSON.stringify(mockUsers));
       }
+
+      // Check database for user
+      const user = mockUsers.find((u: any) => u.email === data.email);
+      
+      if (!user) {
+        setError("Account not found. Please sign up first.");
+        setIsLoading(false);
+        return;
+      }
+      
+      if (user.password !== data.password) {
+        setError("Invalid email or password.");
+        setIsLoading(false);
+        return;
+      }
+      
+      // Success
+      login("mock-jwt-token-12345", {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      });
     }, 1500);
   };
 
