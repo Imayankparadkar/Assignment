@@ -12,7 +12,8 @@ This project successfully implements 100% of the required and bonus features:
 
 ### Core Requirements
 - **Login & Signup Pages**: Beautiful, responsive interfaces with strict form validation.
-- **Forgot & Reset Password Pages**: Complete flows for account recovery simulation.
+- **Email Verification**: Real 6-digit OTP email verification flow integrated with Resend API for new signups.
+- **Forgot & Reset Password Pages**: Complete flows for account recovery simulation via real email delivery.
 - **Profile Dashboard**: A protected route only accessible to authenticated users.
 - **Form Validation**: Powered by `zod` and `react-hook-form` to ensure secure, correct data entry.
 - **Mock JWT Authentication**: A simulated authentication flow managed globally via React Context.

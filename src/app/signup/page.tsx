@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +26,7 @@ const signupSchema = z.object({
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
+  const router = useRouter();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -48,14 +50,16 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupFormValues) => {
     setIsLoading(true);
     
-    // Simulate API call for registration
-    timeoutRef.current = setTimeout(() => {
+    try {
       // Create user object for mock database
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
       const newUser = {
         id: Math.random().toString(36).substr(2, 9),
         name: data.name,
         email: data.email,
         password: data.password, 
+        verified: false,
+        verificationCode: verificationCode
       };
 
       // Get existing users from mock database
@@ -66,21 +70,30 @@ export default function SignupPage() {
       const userExists = existingUsers.find((u: any) => u.email === data.email);
       
       if (userExists) {
-        // In a real app we'd show an error state for this, but for now we just proceed to login
-        // to not break the UI flow drastically without adding new error states to signup.
-        // Actually, let's just proceed to login the existing user.
+        // Proceed to verification if they already exist (in a real app, handle differently)
       } else {
         existingUsers.push(newUser);
         localStorage.setItem("mockUsers", JSON.stringify(existingUsers));
       }
 
-      // Mock successful signup and auto-login
-      login("mock-jwt-token-newuser", {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
+      // Send verification email via API
+      const response = await fetch('/api/send-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: newUser.email, code: verificationCode }),
       });
-    }, 1500);
+
+      if (!response.ok) {
+        throw new Error('Failed to send verification email');
+      }
+
+      setIsLoading(false);
+      // Redirect to verification page
+      router.push(`/verify-email?email=${encodeURIComponent(newUser.email)}`);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
   };
 
   return (

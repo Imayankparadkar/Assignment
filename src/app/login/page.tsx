@@ -52,7 +52,7 @@ export default function LoginPage() {
       let mockUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
       
       // Seed default account if it doesn't exist
-      const defaultUser = { id: "1", name: "Test User", email: "test@example.com", password: "password123" };
+      const defaultUser = { id: "1", name: "Test User", email: "test@example.com", password: "password123", verified: true };
       if (!mockUsers.find((u: any) => u.email === defaultUser.email)) {
         mockUsers.push(defaultUser);
         localStorage.setItem("mockUsers", JSON.stringify(mockUsers));
@@ -69,6 +69,12 @@ export default function LoginPage() {
       
       if (user.password !== data.password) {
         setError("Invalid email or password.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (user.verified === false) {
+        setError("Please verify your email address first.");
         setIsLoading(false);
         return;
       }
