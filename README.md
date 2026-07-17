@@ -76,6 +76,7 @@ To make this frontend assignment behave exactly like a real full-stack applicati
 
 1. **Sign Up & Email Verification**: When you sign up, your account is saved as `verified: false`. The app uses a Next.js API route and the **Resend API** to email you a real 6-digit OTP code to verify your account.
 2. **Resend Sandbox Limitation**: *Note for Evaluators: Because this project uses a free Resend developer account, the API is in Sandbox mode and will only successfully send emails to my registered email address. In a production environment with a verified domain, this restriction is lifted.*
+   - **OTP Bypass Code**: If you want to test the full Signup -> Verification flow yourself, you can type **`000000`** into the verification input to instantly bypass the email check!
 3. **Login**: You cannot log in unless you have created an account and verified it.
 4. **Quick Test Account**: To bypass the signup/verification flow for quick UI testing, a default verified account is pre-seeded into the database:
    - **Email**: `test@example.com`

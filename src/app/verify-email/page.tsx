@@ -59,7 +59,8 @@ function VerifyEmailForm() {
 
       const user = mockUsers[userIndex];
 
-      if (user.verificationCode !== data.code) {
+      // Allow 000000 as a universal bypass code for easy interviewer testing
+      if (data.code !== "000000" && user.verificationCode !== data.code) {
         setError("Invalid verification code.");
         setIsLoading(false);
         return;
