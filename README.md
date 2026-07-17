@@ -80,6 +80,6 @@ To make this frontend assignment behave exactly like a real full-stack applicati
 3. **Login**: You cannot log in unless you have created an account and verified it.
 4. **Quick Test Account**: To bypass the signup/verification flow for quick UI testing, a default verified account is pre-seeded into the database:
    - **Email**: `test@example.com`
-   - **Password**: `password123`
+   - **Password**: `Password123!`
 
 Thank you for reviewing my submission!

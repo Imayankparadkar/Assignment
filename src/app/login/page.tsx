@@ -52,7 +52,7 @@ export default function LoginPage() {
       let mockUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
       
       // Seed default account if it doesn't exist
-      const defaultUser = { id: "1", name: "Test User", email: "test@example.com", password: "password123", verified: true };
+      const defaultUser = { id: "1", name: "Test User", email: "test@example.com", password: "Password123!", verified: true };
       if (!mockUsers.find((u: any) => u.email === defaultUser.email)) {
         mockUsers.push(defaultUser);
         localStorage.setItem("mockUsers", JSON.stringify(mockUsers));
